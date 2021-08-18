@@ -38,4 +38,15 @@ defmodule NflRushingWeb.PlayerRushingControllerTest do
       assert first["TD"] <= second["TD"]
     end
   end
+
+  describe "show/1" do
+    test "returns specific player data", %{conn: conn} do
+      assert %{
+               "player" => %{"Player" => "Joe Banyard"}
+             } =
+               conn
+               |> get("/api/player-rushing/Joe Banyard")
+               |> json_response(200)
+    end
+  end
 end

@@ -9,21 +9,30 @@ defmodule NflRushing.NflRushingTest do
     end
 
     test "returns data sorted by Total Rushing Yards" do
-      [first, second | _] = NflRushing.index("Yds")
+      [first, second | _] = NflRushing.index(%{"sort_by" => "Yds"})
 
       assert first["Yds"] <= second["Yds"]
     end
 
     test "returns data sorted by Longest Rush" do
-      [first, second | _] = NflRushing.index("Lng")
+      [first, second | _] = NflRushing.index(%{"sort_by" => "Lng"})
 
       assert first["Lng"] <= second["Lng"]
     end
 
     test "returns data sorted by Total Rushing Touchdowns" do
-      [first, second | _] = NflRushing.index("TD")
+      [first, second | _] = NflRushing.index(%{"sort_by" => "TD"})
 
       assert first["TD"] <= second["TD"]
+    end
+  end
+
+  describe "show/1" do
+    test "returns specific player data" do
+      player_name = "Joe Banyard"
+
+      assert %{"Player" => player_name} =
+               NflRushing.show(%{"name" => player_name})
     end
   end
 end
