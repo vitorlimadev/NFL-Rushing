@@ -15,8 +15,11 @@ defmodule NflRushing do
   end
 
   def show(%{"name" => name}) do
-    cached_content()
-    |> Enum.filter(&(&1["Player"] === name))
+    [player] =
+      cached_content()
+      |> Enum.filter(&(&1["Player"] === name))
+
+    player
   end
 
   defp cached_content() do
