@@ -36,6 +36,7 @@ defmodule NflRushing.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:jason, "~> 1.0"},
       {:phoenix_pubsub, "~> 2.0"}
     ]
   end

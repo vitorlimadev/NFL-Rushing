@@ -9,8 +9,6 @@
 # move said applications out of the umbrella.
 use Mix.Config
 
-
-
 config :nfl_rushing_web,
   generators: [context_app: :nfl_rushing]
 
