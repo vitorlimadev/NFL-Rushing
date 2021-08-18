@@ -10,13 +10,13 @@ defmodule NflRushing do
     |> Enum.sort_by(& &1[item])
   end
 
-  def index(%{"player_name" => name}) do
-    cached_content()
-    |> Enum.filter(& &1["Player"] === name)
-  end
-
   def index(_) do
     cached_content()
+  end
+
+  def show(%{"name" => name}) do
+    cached_content()
+    |> Enum.filter(&(&1["Player"] === name))
   end
 
   defp cached_content() do

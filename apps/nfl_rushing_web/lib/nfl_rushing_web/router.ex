@@ -9,5 +9,6 @@ defmodule NflRushingWeb.Router do
     pipe_through :api
 
     get "/player-rushing", PlayerRushingController, :index
+    get "/player-rushing/:name", PlayerRushingController, :show
   end
 end
