@@ -73,6 +73,6 @@ Query params
 
 Inside the project's root folter, run:
 ```sh
-mix test
+mix test --trace
 ```
 to run all the test suite.
