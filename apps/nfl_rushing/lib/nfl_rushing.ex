@@ -6,25 +6,17 @@ defmodule NflRushing do
   alias NflRushing.Cache
 
   def index(%{"sort_by" => item}) do
-    apply_sort(item)
-  end
-
-  def index(%{"player_name" => name}) do
-    apply_filter(name)
-  end
-
-  def index(_) do
-    cached_content()
-  end
-
-  defp apply_sort(item) do
     cached_content()
     |> Enum.sort_by(& &1[item])
   end
 
-  defp apply_filter(name) do
+  def index(%{"player_name" => name}) do
     cached_content()
     |> Enum.filter(& &1["Player"] === name)
+  end
+
+  def index(_) do
+    cached_content()
   end
 
   defp cached_content() do
