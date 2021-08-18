@@ -29,10 +29,8 @@ defmodule NflRushing.NflRushingTest do
 
   describe "show/1" do
     test "returns specific player data" do
-      player_name = "Joe Banyard"
-
-      assert %{"Player" => player_name} =
-               NflRushing.show(%{"name" => player_name})
+      assert %{"Player" => "Joe Banyard"} =
+               NflRushing.show(%{"name" => "Joe Banyard"})
     end
   end
 end
