@@ -54,25 +54,36 @@ We will evaluate you on your ability to solve the problem defined in the require
 If you have any questions regarding requirements, do not hesitate to email your contact at theScore for clarification.
 
 ### Installation and running this solution
-Inside the project's root folter, run:
+
+1. Inside the following command on the project's root folter, to get all dependencies and run the test suite.
+```sh
+mix deps.get && mix test --trace
+```
+
+2. Start the Phoenix webserver at port 4000 with:
 ```sh
 iex -S mix phx.server
 ```
-to start the web server on port 4000.
+
+3. On another terminal, get the frontend's dependencies:
+```sh
+cd apps/nfl_rushing_frontend && yarn
+```
+
+4. Start the React application on port 3000 with:
+```sh
+yarn start
+```
 
 ### Routes
 
-#### /api/player-rushing
+### /api/player-rushing
 Returns the cached Player's Rushing data.
 
 Query params
 * **sort_by**: Sorts the player's rushing data by the given *key*. Ex *?sort=Lng*
-* **player_name**: Returns only the given player name.
 
-### Tests
+### /api/player-rushing/:name
 
-Inside the project's root folter, run:
-```sh
-mix test --trace
-```
-to run all the test suite.
+URL params
+* **name**: Returns only the given player data.
