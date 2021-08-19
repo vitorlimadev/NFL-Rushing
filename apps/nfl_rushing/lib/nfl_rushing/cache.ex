@@ -7,6 +7,7 @@ defmodule NflRushing.Cache do
 
   @table :player_rushing
 
+  @spec init :: :ok | {:err, {:invalid_json, map}}
   def init() do
     :ets.new(@table, [:set, :protected, :named_table, {:read_concurrency, true}])
 
@@ -25,7 +26,7 @@ defmodule NflRushing.Cache do
          {:ok, :cached} <- fill_cache(player_rushing_info_list) do
       :ok
     else
-      {:error, %Jason.DecodeError{}} = err ->
+      {:error, %Jason.DecodeError{} = err} ->
         {:err, {:invalid_json, err}}
     end
   end
@@ -73,6 +74,7 @@ defmodule NflRushing.Cache do
 
   defp parse_lng(lng), do: lng
 
+  @spec index :: [list]
   def index() do
     :ets.match(@table, :"$1")
   end

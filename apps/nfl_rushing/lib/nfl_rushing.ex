@@ -5,16 +5,69 @@ defmodule NflRushing do
 
   alias NflRushing.Cache
 
-  def index(%{"sort_by" => item}) do
+  @doc """
+  Lists all cached player's rushing data.
+
+  iex> NflRushing.index(%{sort_by: "Yds"})
+  [
+    %{
+      "Player" => "Will Tukuafu",
+      "Team" => "SEA",
+      "Pos" => "FB",
+      "Att" => 2,
+      "Att/G" => 0.3,
+      "Yds" => 2,
+      "Avg" => 1,
+      "Yds/G" => 0.3,
+      "TD" => 0,
+      "Lng" => 2,
+      "1st" => 0,
+      "1st%" => 0,
+      "20+" => 0,
+      "40+" => 0,
+      "FUM" => 0
+    },
+    ...
+  ]
+  """
+  @spec index(%{sort_by: binary}) :: [map]
+  def index(%{sort_by: item}) do
     cached_content()
     |> Enum.sort_by(& &1[item])
   end
 
-  def index(_) do
+  @spec index :: [map]
+  def index() do
     cached_content()
   end
 
-  def show(%{"name" => name}) do
+  @doc """
+  Returns a player's rushing data.
+
+  iex> NflRushing.show(%{name: "Will Tukuafu"})
+  [
+    %{
+      "Player" => "Will Tukuafu",
+      "Team" => "SEA",
+      "Pos" => "FB",
+      "Att" => 2,
+      "Att/G" => 0.3,
+      "Yds" => 2,
+      "Avg" => 1,
+      "Yds/G" => 0.3,
+      "TD" => 0,
+      "Lng" => 2,
+      "1st" => 0,
+      "1st%" => 0,
+      "20+" => 0,
+      "40+" => 0,
+      "FUM" => 0
+    },
+    ...
+  ]
+  """
+  @spec show(%{:name => binary}) :: any
+  def show(%{name: name}) do
     [player] =
       cached_content()
       |> Enum.filter(&(&1["Player"] === name))
