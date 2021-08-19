@@ -42,6 +42,7 @@ defmodule NflRushingWeb.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:nfl_rushing, in_umbrella: true},
       {:jason, "~> 1.0"},
+      {:cors_plug, "~> 2.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end
