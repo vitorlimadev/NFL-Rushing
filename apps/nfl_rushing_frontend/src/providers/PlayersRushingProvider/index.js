@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 
 export const PlayersRushingContext = createContext({});
 
@@ -6,7 +6,7 @@ export const PlayersRushingProvider = ({ children }) => {
   const [playerRushingData, setPlayerRushingData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchPlayersData = async (sortBy) => {
+  const fetchPlayersData = useCallback(async (sortBy) => {
     setLoading(true);
     let url = "http://localhost:4000/api/player-rushing";
 
@@ -19,7 +19,7 @@ export const PlayersRushingProvider = ({ children }) => {
 
     setPlayerRushingData(data);
     setLoading(false);
-  };
+  }, []);
 
   const fetchOnePlayer = async (name) => {
     setLoading(true);

@@ -16,7 +16,7 @@ export const Table = () => {
     };
 
     loadData();
-  }, []);
+  }, [fetchPlayersData]);
 
   return (
     <Container>
