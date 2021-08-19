@@ -13,9 +13,9 @@ defmodule NflRushingWeb.PlayerRushingController do
     |> render("index.json", %{data: NflRushing.index()})
   end
 
-  def show(conn, params) do
+  def show(conn, %{"name" => name}) do
     conn
     |> put_status(200)
-    |> render("show.json", %{player: NflRushing.show(params)})
+    |> render("show.json", %{player: NflRushing.show(%{name: name})})
   end
 end
