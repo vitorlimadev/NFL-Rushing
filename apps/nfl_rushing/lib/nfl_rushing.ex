@@ -39,7 +39,7 @@ defmodule NflRushing do
 
   def index(%{sort_by: item}) do
     cached_content()
-    |> Enum.sort_by(& &1[item])
+    |> Enum.sort_by(& &1[item], &>=/2)
     |> Enum.map(&parse_response_lng/1)
   end
 
