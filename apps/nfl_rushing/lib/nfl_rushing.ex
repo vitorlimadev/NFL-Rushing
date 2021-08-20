@@ -49,15 +49,6 @@ defmodule NflRushing do
     |> Enum.map(&parse_response_lng/1)
   end
 
-  # To sort by the integer value.
-  defp parse_lng_to_sort(%{"Lng" => {value, "T"}}), do: value
-  defp parse_lng_to_sort(%{"Lng" => value}), do: value
-  # To always return a string after sorted.
-  defp parse_response_lng(%{"Lng" => {value, "T"}} = player),
-    do: Map.put(player, "Lng", "#{value}T")
-
-  defp parse_response_lng(%{"Lng" => value} = player), do: Map.put(player, "Lng", "#{value}")
-
   @doc """
   Returns a player's rushing data.
   
@@ -90,7 +81,7 @@ defmodule NflRushing do
       |> Enum.filter(&(&1["Player"] === name))
 
     case result do
-      [player] -> {:ok, player}
+      [player] -> {:ok, parse_response_lng(player)}
       [] -> {:error, {:player_not_found, name}}
     end
   end
@@ -121,4 +112,13 @@ defmodule NflRushing do
       }
     end)
   end
+
+  # To sort by the integer value.
+  defp parse_lng_to_sort(%{"Lng" => {value, "T"}}), do: value
+  defp parse_lng_to_sort(%{"Lng" => value}), do: value
+  # To always return a string after sorted.
+  defp parse_response_lng(%{"Lng" => {value, "T"}} = player),
+    do: Map.put(player, "Lng", "#{value}T")
+
+  defp parse_response_lng(%{"Lng" => value} = player), do: Map.put(player, "Lng", "#{value}")
 end
