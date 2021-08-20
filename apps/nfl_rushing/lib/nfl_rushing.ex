@@ -7,7 +7,7 @@ defmodule NflRushing do
 
   @doc """
   Lists all cached player's rushing data.
-
+  
   iex> NflRushing.index(%{sort_by: "Yds"})
   [
     %{
@@ -31,6 +31,12 @@ defmodule NflRushing do
   ]
   """
   @spec index(%{sort_by: binary}) :: [map]
+  def index(%{sort_by: "Lng"}) do
+    cached_content()
+    |> Enum.sort_by(&parse_lng_to_sort/1, &>=/2)
+    |> Enum.map(&parse_response_lng/1)
+  end
+
   def index(%{sort_by: item}) do
     cached_content()
     |> Enum.sort_by(& &1[item])
@@ -41,9 +47,18 @@ defmodule NflRushing do
     cached_content()
   end
 
+  # To sort by the integer value.
+  defp parse_lng_to_sort(%{"Lng" => {value, "T"}}), do: value
+  defp parse_lng_to_sort(%{"Lng" => value}), do: value
+  # To always return a string after sorted.
+  defp parse_response_lng(%{"Lng" => {value, "T"}} = player),
+    do: Map.put(player, "Lng", "#{value}T")
+
+  defp parse_response_lng(%{"Lng" => value} = player), do: Map.put(player, "Lng", "#{value}")
+
   @doc """
   Returns a player's rushing data.
-
+  
   iex> NflRushing.show(%{name: "Will Tukuafu"})
   [
     %{

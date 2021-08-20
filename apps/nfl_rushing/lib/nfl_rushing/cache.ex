@@ -67,9 +67,12 @@ defmodule NflRushing.Cache do
   end
 
   defp parse_lng(lng) when is_binary(lng) do
-    {integer, _} = Integer.parse(lng)
+    {value, touchdown?} = Integer.parse(lng)
 
-    integer
+    case touchdown? do
+      "T" -> {value, "T"}
+      _ -> value
+    end
   end
 
   defp parse_lng(lng), do: lng
