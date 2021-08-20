@@ -23,15 +23,16 @@ export const PlayersRushingProvider = ({ children }) => {
 
   const fetchOnePlayer = async (name) => {
     setLoading(true);
-    try {
-      const response = await fetch(
-        `http://localhost:4000/api/player-rushing/${name}`
-      );
-      const data = await response.json();
+    const response = await fetch(
+      `http://localhost:4000/api/player-rushing/${name}`
+    );
 
-      setPlayerRushingData([data.player]);
-    } catch (e) {
-      setPlayerRushingData([]);
+    const json = await response.json();
+
+    if (response.ok) {
+      setPlayerRushingData([json.player]);
+    } else {
+      alert(json.message);
     }
     setLoading(false);
   };

@@ -68,11 +68,14 @@ defmodule NflRushing do
   """
   @spec show(%{:name => binary}) :: any
   def show(%{name: name}) do
-    [player] =
+    result =
       cached_content()
       |> Enum.filter(&(&1["Player"] === name))
 
-    player
+    case result do
+      [player] -> {:ok, player}
+      [] -> {:error, {:player_not_found, name}}
+    end
   end
 
   defp cached_content() do

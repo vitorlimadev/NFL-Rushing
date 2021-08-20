@@ -14,8 +14,15 @@ defmodule NflRushingWeb.PlayerRushingController do
   end
 
   def show(conn, %{"name" => name}) do
-    conn
-    |> put_status(200)
-    |> render("show.json", %{player: NflRushing.show(%{name: name})})
+    with {:ok, player} <- NflRushing.show(%{name: name}) do
+      conn
+      |> put_status(200)
+      |> render("show.json", %{player: player})
+    else
+      {:error, {:player_not_found, name}} ->
+        conn
+        |> put_status(400)
+        |> render("player_not_found.json", %{player: name})
+    end
   end
 end
