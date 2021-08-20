@@ -40,11 +40,13 @@ defmodule NflRushing do
   def index(%{sort_by: item}) do
     cached_content()
     |> Enum.sort_by(& &1[item])
+    |> Enum.map(&parse_response_lng/1)
   end
 
   @spec index :: [map]
   def index() do
     cached_content()
+    |> Enum.map(&parse_response_lng/1)
   end
 
   # To sort by the integer value.
