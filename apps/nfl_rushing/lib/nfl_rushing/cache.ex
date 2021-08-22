@@ -49,7 +49,7 @@ defmodule NflRushing.Cache do
           &1["Pos"],
           &1["Att"],
           &1["Att/G"],
-          &1["Yds"],
+          parse_yds(&1["Yds"]),
           &1["Avg"],
           &1["Yds/G"],
           &1["TD"],
@@ -66,6 +66,7 @@ defmodule NflRushing.Cache do
     {:ok, :cached}
   end
 
+  # Stores Lng as integers to sort them easier but keeps touchdown information.
   defp parse_lng(lng) when is_binary(lng) do
     {value, touchdown?} = Integer.parse(lng)
 
@@ -76,6 +77,15 @@ defmodule NflRushing.Cache do
   end
 
   defp parse_lng(lng), do: lng
+
+  # Normalizes incorrect string Yds data to integer
+  defp parse_yds(value) when is_binary(value) do
+    {number, _} = Integer.parse(value)
+
+    number
+  end
+
+  defp parse_yds(value), do: value
 
   @spec index :: [list]
   def index() do
